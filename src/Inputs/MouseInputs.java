@@ -28,20 +28,21 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        switch (Gamestate.state){
+            case MENU:
+                gamePanel.getGame().getMenu().mousePressed(e);
+            case PLAYING:
+                gamePanel.getGame().getPlaying().mousePressed(e);
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         switch (Gamestate.state){
             case MENU:
-                break;
+                gamePanel.getGame().getMenu().mouseReleased(e);
             case PLAYING:
-                if (e.getButton() == MouseEvent.BUTTON1) {
-                    if (checkMousePressed[BUTTON3]) {
-                        gamePanel.getGame().getPlayer().setAttackJump2(true);
-                    } else gamePanel.getGame().getPlayer().setAttack(true);
-                } else if (e.getButton() == BUTTON3) checkMousePressed[BUTTON3] = true;
+                gamePanel.getGame().getPlaying().mouseReleased(e);
         }
     }
 
@@ -57,11 +58,21 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-
+        switch (Gamestate.state){
+            case MENU:
+                gamePanel.getGame().getMenu().mouseDragged(e);
+            case PLAYING:
+                gamePanel.getGame().getPlaying().mouseDragged(e);
+        }
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-//        gamePanel.setXYPosition(e.getX(), e.getY());
+        switch (Gamestate.state){
+            case MENU:
+                gamePanel.getGame().getMenu().mouseMoved(e);
+            case PLAYING:
+                gamePanel.getGame().getPlaying().mouseMoved(e);
+        }
     }
 }

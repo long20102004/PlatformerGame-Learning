@@ -11,7 +11,7 @@ import java.awt.*;
 import static main.Game.GAME_WIDTH;
 import static main.Game.GAME_HEIGHT;
 public class GamePanel extends JComponent {
-    Game game;
+    private Game game;
     MouseInputs mouseInputs = new MouseInputs(this);
     public GamePanel(Game game) {
         this.game = game;

@@ -3,8 +3,6 @@ package Entities;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
-import static main.Game.SCALE;
-
 public abstract class Entities {
     public float x,y;
     public int width,height;
@@ -21,6 +19,8 @@ public abstract class Entities {
     public void drawBorder(Graphics g){
         g.setColor(Color.PINK);
         g.drawRect((int)border.x,(int)border.y,(int)border.width,(int) border.height);
-
+    }
+    public Rectangle2D.Float getHitBox(){
+        return this.border;
     }
 }

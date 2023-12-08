@@ -20,10 +20,10 @@ public class Player extends Entities {
     private int aniTick;
     private final int aniSpeed = 20;
     private int aniIndex = 0;
-    private boolean isLeft, isRight, isUp, isDown, isMoving;
+    private boolean isLeft, isRight, isMoving;
     private boolean isAttack, isJump, isAttackJump1, isAttackJump2, isGround;
     private int player_action = IDLE;
-    private final float playerSpeed = 1.0f;
+    private final float playerSpeed = SCALE;
     public float xDrawOffSet = 21 * SCALE;
     public float yDrawOffSet = 4 * SCALE;
     private float fallSpeedAfterCollision = 0.5f * SCALE;
@@ -33,7 +33,7 @@ public class Player extends Entities {
     private float airSpeed = 0f;
     private boolean inAir;
     private float gravity = 0.04f * SCALE;
-    private float jumpSpeed = -2.25f * SCALE    ;
+    private float jumpSpeed = -2.25f * SCALE;
     private float fallSpeed = 0.5f * SCALE;
 
     Color color;
@@ -47,9 +47,8 @@ public class Player extends Entities {
         super(x, y, (int) width, (int) height);
         importImage();
         loadAnimation();
-        initBorder(x, y, 20 * SCALE, 27 * SCALE );
+        initBorder(x, y, 20 * SCALE, 27 * SCALE);
     }
-
 
 
     private void loadAnimation() {
@@ -61,10 +60,9 @@ public class Player extends Entities {
         }
     }
 
-    public void render(Graphics graphics) {
-        graphics.drawImage(animations[player_action][aniIndex], (int) (border.x - xDrawOffSet), (int) (border.y - yDrawOffSet), width, height, null);
-
-//        drawBorder(graphics);
+    public void render(Graphics graphics, int XlevelOffset) {
+        graphics.drawImage(animations[player_action][aniIndex], (int) ((int) (border.x - xDrawOffSet) - XlevelOffset), (int) (border.y - yDrawOffSet), width, height, null);
+        drawBorder(graphics);
     }
 
     public void update() {
@@ -89,16 +87,17 @@ public class Player extends Entities {
         if (isJump) {
             jump();
         }
-        System.out.println(isEntityOnTheFloor(border, type));
-        if (!isLeft && !isRight && !inAir) return;
+        if (!inAir) {
+            if ((!isLeft && !isRight) || (isRight && isLeft)) return;
+        }
         float xSpeed = 0;
         if (isLeft) {
-            xSpeed -= playerSpeed * SCALE;
+            xSpeed -= playerSpeed;
         }
         if (isRight) {
-            xSpeed += playerSpeed * SCALE;
+            xSpeed += playerSpeed;
         }
-        if (!inAir){
+        if (!inAir) {
             if (!isEntityOnTheFloor(border, type)) inAir = true;
         }
         if (inAir) {
@@ -116,7 +115,7 @@ public class Player extends Entities {
         } else {
             updateXPos(xSpeed);
         }
-        System.out.println(inAir);
+        isMoving = true;
     }
 
     private void jump() {
@@ -161,14 +160,8 @@ public class Player extends Entities {
         isRight = right;
     }
 
-
-    public void setUp(boolean up) {
-        isUp = up;
-    }
-
-
-    public void setDown(boolean down) {
-        isDown = down;
+    public void setMoving(boolean isMoving) {
+        this.isMoving = isMoving;
     }
 
     public void setAttackJump2(boolean attackJump2) {
@@ -192,7 +185,7 @@ public class Player extends Entities {
 
     public void windowFocusLost() {
         isGround = isMoving = isAttack = isAttackJump1 = isAttackJump2 = isJump = false;
-        isLeft = isRight = isUp = isDown = false;
+        isLeft = isRight = false;
     }
 
     public void setType(int[][] type) {

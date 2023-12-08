@@ -10,7 +10,7 @@ import java.awt.*;
 
 public class Game implements Runnable {
     public final static int TILES_DEFAULT_SIZE = 32;
-    public final static float SCALE = 1.5f;
+    public final static float SCALE = 1f;
     public final static int TILES_IN_WIDTH = 26;
     public final static int TILES_IN_HEIGHT = 14;
     public final static int TILE_SIZE = (int) (TILES_DEFAULT_SIZE * SCALE);
@@ -18,9 +18,7 @@ public class Game implements Runnable {
     public final static int GAME_HEIGHT = TILES_IN_HEIGHT * TILE_SIZE;
 
     private final int FPS = 120;
-    private final int UPS = 200;
-    private Player player;
-    private LevelManager levelManager;
+    private final int UPS = 100;
     private GameWindow gameWindow;
     private GamePanel gamePanel;
     private Playing playing;
@@ -36,11 +34,8 @@ public class Game implements Runnable {
     }
 
     public void classInit() {
-        levelManager = new LevelManager(this);
-        player = new Player(200, 200, (int) (64 * SCALE), (int) (40 * SCALE));
-        player.setType(levelManager.getLevel_One().getLevelType());
-        playing = new Playing(player);
-        menu = new Menu(player);
+        playing = new Playing(this);
+        menu = new Menu(this);
     }
 
     private void start() {
@@ -51,10 +46,11 @@ public class Game implements Runnable {
     public void update() {
         switch (Gamestate.state) {
             case MENU:
+                menu.update();
                 break;
             case PLAYING:
-                levelManager.update();
-                player.update();
+                playing.update();
+                break;
         }
     }
 
@@ -64,8 +60,8 @@ public class Game implements Runnable {
                 menu.draw(graphics);
                 break;
             case PLAYING:
-                levelManager.render(graphics);
-                player.render(graphics);
+                playing.draw(graphics);
+                break;
         }
     }
 
@@ -102,9 +98,6 @@ public class Game implements Runnable {
         }
     }
 
-    public Player getPlayer() {
-        return this.player;
-    }
 
     public Playing getPlaying() {
         return playing;

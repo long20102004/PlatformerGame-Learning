@@ -1,5 +1,7 @@
 package main;
 
+import gamestates.Gamestate;
+
 import javax.swing.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
@@ -21,7 +23,13 @@ public class GameWindow extends JFrame {
 
             @Override
             public void windowLostFocus(WindowEvent e) {
-                gamePanel.getGame().getPlayer().windowFocusLost();
+                switch (Gamestate.state){
+                    case PLAYING:
+                        gamePanel.getGame().getPlaying().getPlayer().windowFocusLost();
+                        break;
+                    case MENU:
+                        gamePanel.getGame().getMenu().getPlayer().windowFocusLost();
+                }
             }
         });
 

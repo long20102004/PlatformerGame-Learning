@@ -9,12 +9,20 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class LoadSave {
-    public static final String SPRITE_PLAYER = "/player_sprites.png";
-    public static final String LEVEL_ATLAS = "/outside_sprites.png";
-    public static final String LEVEL_ONE_FORM_MAP = "/level_one_data.png";
+    public static final String SPRITE_PLAYER = "player_sprites.png";
+    public static final String LEVEL_ATLAS = "outside_sprites.png";
+//    public static final String LEVEL_ONE_FORM_MAP = "level_one_data.png";
+    public static final String LEVEL_ONE_FORM_MAP = "level_one_data_long.png";
+    public static final String MENU_BUTTON = "button_atlas.png";
+    public static final String MENU_BACKGROUND = "menu_background.png";
+    public static final String PAUSE_BACKGROUND = "pause_menu.png";
+    public static final String SOUND_BUTTONS = "sound_button.png";
+    public static final String URM_BUTTONS = "urm_buttons.png";
+    public static final String VOLUME_BUTTONS = "volume_buttons.png";
+    public static final String PAUSE_ENTIRE_BACKGROUND = "background_menu.png";
     public static BufferedImage getImg(String fileName) {
         BufferedImage img = null;
-        InputStream is = LoadSave.class.getResourceAsStream(fileName);
+        InputStream is = LoadSave.class.getResourceAsStream("/" + fileName);
         try {
             img = ImageIO.read(is);
         } catch (
@@ -30,8 +38,8 @@ public class LoadSave {
         return img;
     }
     public static int[][] getType(){
-        int[][] type = new int[Game.TILES_IN_HEIGHT][Game.TILES_IN_WIDTH ];
         BufferedImage img = getImg(LEVEL_ONE_FORM_MAP);
+        int[][] type = new int[img.getHeight()][img.getWidth()];
         for (int i=0; i<img.getHeight(); i++){
             for (int j=0; j<img.getWidth(); j++){
                 Color color = new Color(img.getRGB(j,i));

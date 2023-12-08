@@ -4,10 +4,15 @@ import main.Game;
 
 import java.awt.geom.Rectangle2D;
 
+import static main.Game.GAME_HEIGHT;
+import static main.Game.TILES_DEFAULT_SIZE;
+import static utilz.LoadSave.LEVEL_ONE_FORM_MAP;
+
 public class ExtraMethod{
     public static boolean isSolid(float x, float y, int[][] type){
-        if (x < 0 || x >= Game.GAME_WIDTH) return true;
-        if (y < 0 || y >= Game.GAME_HEIGHT) return true;
+        int maxX = type[0].length * TILES_DEFAULT_SIZE;
+        if (x < 0 || x >= maxX) return true;
+        if (y < 0 || y >= GAME_HEIGHT) return true;
         float yPos = y / Game.TILE_SIZE;
         float xPos = x / Game.TILE_SIZE;
         int value = type[(int)yPos][(int)xPos];

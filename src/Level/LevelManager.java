@@ -6,6 +6,8 @@ import utilz.LoadSave;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import static main.Game.SCALE;
+
 public class LevelManager {
     private Game game;
     private BufferedImage[] levelSprite;
@@ -29,11 +31,11 @@ public class LevelManager {
         importImg();
         Level_One = new Level(LoadSave.getType());
     }
-    public void render(Graphics graphics){
-        for (int i=0; i<Game.TILES_IN_HEIGHT; i++){
-            for (int j=0; j<Game.TILES_IN_WIDTH; j++){
+    public void render(Graphics graphics, int XlevelOffset){
+        for (int i=0; i< Game.TILES_IN_HEIGHT; i++){
+            for (int j=0; j<Level_One.getLevelType()[0].length; j++){
                 int position = Level_One.getType(j,i);
-                graphics.drawImage(levelSprite[position], j* Game.TILE_SIZE, i*Game.TILE_SIZE, Game.TILE_SIZE, Game.TILE_SIZE, null);
+                graphics.drawImage(levelSprite[position], (int) (j* Game.TILE_SIZE - XlevelOffset), i*Game.TILE_SIZE, Game.TILE_SIZE, Game.TILE_SIZE, null);
             }
         }
     }

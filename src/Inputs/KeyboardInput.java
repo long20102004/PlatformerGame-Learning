@@ -36,7 +36,7 @@ public class KeyboardInput extends JComponent implements KeyListener {
     public void keyReleased(KeyEvent e) {
         switch (Gamestate.state) {
             case MENU:
-                gamePanel.getGame().getPlaying().keyReleased(e);
+                gamePanel.getGame().getMenu().keyReleased(e);
             case PLAYING:
                 gamePanel.getGame().getPlaying().keyReleased(e);
         }
